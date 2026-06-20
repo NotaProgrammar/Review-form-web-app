@@ -1,151 +1,144 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
-<meta charset="UTF-8">
-<title>ثبت نظر درباره خدمات</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>ثبت نظر درباره خدمات</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
 
-<style>
-body{
-font-family:'Vazirmatn',Tahoma,sans-serif;
-background:linear-gradient(135deg,#f5f7fa,#e4ecf5);
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-margin:0;
-}
+    <style>
+        body{
+        font-family:'Vazirmatn',Tahoma,sans-serif;
+        background:linear-gradient(135deg,#f5f7fa,#e4ecf5);
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+        margin:0;
+        }
 
-.container{
-background:white;
-padding:40px;
-border-radius:20px;
-box-shadow:0 15px 35px rgba(0,0,0,0.08);
-width:90%;
-max-width:500px;
-text-align:center;
-}
+        .container{
+        background:white;
+        padding:40px;
+        border-radius:20px;
+        box-shadow:0 15px 35px rgba(0,0,0,0.08);
+        width:90%;
+        max-width:500px;
+        text-align:center;
+        }
 
-h1{
-color:#ff6b35;
-margin-bottom:10px;
-}
+        h1{
+        color:#ff6b35;
+        margin-bottom:10px;
+        }
 
-.form-section{
-text-align:right;
-margin:20px 0;
-}
+        .form-section{
+        text-align:right;
+        margin:20px 0;
+        }
 
-.option{
-margin:10px 0;
-font-size:15px;
-}
+        .option{
+        margin:10px 0;
+        font-size:15px;
+        }
 
-textarea{
-width:100%;
-height:120px;
-padding:10px;
-border-radius:10px;
-border:1px solid #ddd;
-font-family:'Vazirmatn',Tahoma,sans-serif;
-resize:vertical;
-}
+        textarea{
+        width:100%;
+        height:120px;
+        padding:10px;
+        border-radius:10px;
+        border:1px solid #ddd;
+        font-family:'Vazirmatn',Tahoma,sans-serif;
+        resize:vertical;
+        }
 
-.buttons{
-display:flex;
-justify-content:center;
-gap:15px;
-margin-top:20px;
-}
+        select{
+        width:100%;
+        padding:10px;
+        border-radius:10px;
+        border:1px solid #ddd;
+        font-family:'Vazirmatn',Tahoma,sans-serif;
+        }
 
-button, .next-btn{
-font-family:'Vazirmatn',Tahoma,sans-serif;
-background:#ff6b35;
-color:white;
-border:none;
-padding:14px 30px;
-border-radius:10px;
-font-size:16px;
-cursor:pointer;
-text-decoration:none;
-display:inline-block;
-}
+        .buttons{
+        display:flex;
+        justify-content:center;
+        gap:15px;
+        margin-top:20px;
+        }
 
-button:hover, .next-btn:hover{
-background:#e85a2b;
-}
-</style>
+        button, .next-btn{
+        font-family:'Vazirmatn',Tahoma,sans-serif;
+        background:#ff6b35;
+        color:white;
+        border:none;
+        padding:14px 30px;
+        border-radius:10px;
+        font-size:16px;
+        cursor:pointer;
+        text-decoration:none;
+        display:inline-block;
+        }
+
+        button:hover, .next-btn:hover{
+        background:#e85a2b;
+        }
+    </style>
 
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-<h1>نظر درباره خدمات</h1>
+        <h1>نظر درباره خدمات</h1>
 
-<p>
-تجربه خود از خدمات ما را ثبت کنید
-</p>
+        <p>
+            تجربه خود از خدمات ما را ثبت کنید
+        </p>
 
-<form method="post" action="/form/food_form/">
-{% csrf_token %}
+        <form method="post" action="/form/food_form/">
+            {% csrf_token %}
 
-<div class="form-section">
-<p>مدت زمان ارائه خدمات چگونه بود؟</p>
+            <div class="form-section">
+                <p>مدت زمان ارائه خدمات چگونه بود؟</p>
 
-<div class="option">
-<label><input type="radio" name="duration" value="S"> کندتر از انتظار</label>
-</div>
+                <select name="duration">
+<option value="S">کندتر از انتظار</option>
+<option value="E" selected>مطابق انتظار</option>
+<option value="F">سریع‌تر از انتظار</option>
+</select>
 
-<div class="option">
-<label><input type="radio" name="duration" value="E" checked> مطابق انتظار</label>
-</div>
+            </div>
 
-<div class="option">
-<label><input type="radio" name="duration" value="F"> سریع‌تر از انتظار</label>
-</div>
-</div>
+            <div class="form-section">
+                <p>کیفیت خدمات چگونه بود؟</p>
 
-<div class="form-section">
-<p>کیفیت خدمات چگونه بود؟</p>
+                <select name="service_quality">
+<option value="E">عالی</option>
+<option value="G">خوب</option>
+<option value="M" selected>متوسط</option>
+<option value="B">بد</option>
+<option value="T">خیلی بد</option>
+</select>
 
-<div class="option">
-<label><input type="radio" name="service_quality" value="E"> عالی</label>
-</div>
+            </div>
 
-<div class="option">
-<label><input type="radio" name="service_quality" value="G"> خوب</label>
-</div>
+            <div class="form-section">
+                <p>نظر خود را بنویسید</p>
+                <textarea name="review_text" placeholder="تجربه خود را اینجا بنویسید..."></textarea>
+            </div>
 
-<div class="option">
-<label><input type="radio" name="service_quality" value="M" checked> متوسط</label>
-</div>
+            <div class="buttons">
+                <button type="submit">ثبت و ادامه</button>
+            </div>
 
-<div class="option">
-<label><input type="radio" name="service_quality" value="B"> بد</label>
-</div>
+        </form>
 
-<div class="option">
-<label><input type="radio" name="service_quality" value="T"> خیلی بد</label>
-</div>
-</div>
-
-<div class="form-section">
-<p>نظر خود را بنویسید</p>
-<textarea name="review_text" placeholder="تجربه خود را اینجا بنویسید..."></textarea>
-</div>
-
-<div class="buttons">
-<button type="submit">ثبت و ادامه</button>
-
-</div>
-
-</form>
-
-</div>
+    </div>
 
 </body>
+
 </html>

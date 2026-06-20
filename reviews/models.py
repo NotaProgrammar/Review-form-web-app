@@ -7,15 +7,35 @@ class Customer(models.Model):
     purchase_count = models.IntegerField(default=0)
     phone_number = models.CharField(null=True,max_length=11,blank=True)
 
+    def __str__(self):
+        return self.phone_number
+
+
+
 class Food(models.Model):
     name = models.CharField(max_length=100,null=True,blank=True)
     price = models.IntegerField(default=0)
-    rating = models.IntegerField(default=0,blank=True)
+    rating = models.DecimalField(default=0,null=True,blank=True,max_digits=3,decimal_places=2)
+    purchase_count = models.IntegerField(default=0, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "غذا"
+        verbose_name_plural = "غذاها"
 
 
 class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return "نظر سنجی شماره " + self.id.__str__()
+
+    class Meta:
+        verbose_name = "نظرسنجی"
+        verbose_name_plural = "نظرسنجی‌ها"
 
 
 
@@ -41,9 +61,9 @@ class ReviewItem(models.Model):
     SMALL = 'S'
 
     FOOD_SIZE_CHOICES = [
-        (GOOD, 'Good'),
-        (MEDIUM, 'Medium'),
-        (BAD, 'Bad'),
+        (GENEROUS, 'Generous'),
+        (ADEQUATE, 'Adequate'),
+        (SMALL, 'Small'),
     ]
 
     #food price choices
@@ -61,10 +81,13 @@ class ReviewItem(models.Model):
     food = models.ForeignKey(Food, on_delete=models.PROTECT)
     quantity = models.IntegerField()
     first_time = models.BooleanField(null=False, default=True)
-    food_quality = models.CharField(choices=FOOD_QUALITY_CHOICES, max_length=1, default=MEDIUM)
-    food_size = models.CharField(choices=FOOD_SIZE_CHOICES, max_length=1, default=ADEQUATE)
-    food_price = models.CharField(choices=FOOD_PRICE_CHOICES, max_length=1, default=WELL_PRICED)
-    review_text = models.TextField()
+    food_quality = models.CharField(choices=FOOD_QUALITY_CHOICES, max_length=1, default=MEDIUM,blank=True)
+    food_size = models.CharField(choices=FOOD_SIZE_CHOICES, max_length=1, default=ADEQUATE,blank=True)
+    food_price = models.CharField(choices=FOOD_PRICE_CHOICES, max_length=1, default=WELL_PRICED,blank=True)
+    review_text = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.food.name
 
     class Meta:
         constraints = [
@@ -73,6 +96,7 @@ class ReviewItem(models.Model):
                 name='composite_id',
             )
         ]
+
 
 class ServiceReview(models.Model):
     #duration choices
@@ -102,6 +126,6 @@ class ServiceReview(models.Model):
 
     review = models.OneToOneField(Review, on_delete=models.CASCADE, primary_key=True)
     first_time = models.BooleanField(null=False, default=True)
-    duration = models.CharField(choices=DURATION_CHOICES, max_length=1, default=EXPECTED)
-    service_quality = models.CharField(choices=SERVICE_QUALITY_CHOICES, max_length=1, default=MEDIUM)
+    duration = models.CharField(choices=DURATION_CHOICES, max_length=1, default=EXPECTED, null=True)
+    service_quality = models.CharField(choices=SERVICE_QUALITY_CHOICES, max_length=1, default=MEDIUM,null=True)
     review_text = models.TextField(blank=True, null=True)
