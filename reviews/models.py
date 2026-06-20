@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Customer(models.Model):
+    # Stores basic customer information
     first_name = models.CharField(max_length=100,null=True,blank=True)
     last_name = models.CharField(max_length=100,null=True,blank=True)
     purchase_count = models.IntegerField(default=0)
@@ -13,6 +14,7 @@ class Customer(models.Model):
 
 
 class Food(models.Model):
+    # Stores food details and overall rating data
     name = models.CharField(max_length=100,null=True,blank=True)
     price = models.IntegerField(default=0)
     rating = models.DecimalField(default=0,null=True,blank=True,max_digits=3,decimal_places=2)
@@ -27,6 +29,7 @@ class Food(models.Model):
 
 
 class Review(models.Model):
+    # Represents one full review submitted by a customer
     created_at = models.DateTimeField(auto_now_add=True)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
 
@@ -76,7 +79,7 @@ class ReviewItem(models.Model):
         (EXPENSIVE, 'Expensive'),
     ]
 
-
+    # Stores feedback for one specific food in a review
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     food = models.ForeignKey(Food, on_delete=models.PROTECT)
     quantity = models.IntegerField()
@@ -91,6 +94,7 @@ class ReviewItem(models.Model):
 
     class Meta:
         constraints = [
+            # Prevents duplicate food reviews within the same review
             models.UniqueConstraint(
                 fields=['review', 'food'],
                 name='composite_id',
@@ -124,6 +128,7 @@ class ServiceReview(models.Model):
         (TERRIBLE, 'Terrible'),
     ]
 
+    # Stores the overall service feedback for a review
     review = models.OneToOneField(Review, on_delete=models.CASCADE, primary_key=True)
     first_time = models.BooleanField(null=False, default=True)
     duration = models.CharField(choices=DURATION_CHOICES, max_length=1, default=EXPECTED, null=True)
